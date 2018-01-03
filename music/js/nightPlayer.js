@@ -9,7 +9,7 @@ var nightPlayer = {
 		},
 		//下一首
 		next : function(){
-
+			
 		},
 		//播放
 		play : function(){
@@ -41,8 +41,8 @@ var nightPlayer = {
 		}
 	},
 	option : {
-		autoplay : false,
-		volume : 1,
-		random : false
+		autoplay : false, //是否自动播放
+		volume : 1,	//音量大小
+		random : false //是否随机播放
 	}
 }
