@@ -7,24 +7,35 @@
 .music-left-panel{
 	width:460px;
 	float: left;
+	position: relative;
 }
 
 .music-right-panel{
 	float: right;
 	width: 500px;
-	height: 430px;
+	height: 440px;
 	margin-right: 50px;
+	text-align: left;
+}
+
+.music-lrc {
 	word-break: break-all;
 	overflow-y: scroll;
-	text-align: center;
+	height: 400px;
+	padding-right: 3px;
 }
 
 .nt-music-cover{
 	width:360px;
 	height:360px;
 	border-radius: 50%;
-	background:red;
 	margin:0 50px;
+	box-shadow: 0px 0px 15px #000;
+	background: -webkit-repeating-radial-gradient(#2f2f2f, #1e1e1e 3%);
+    background: -o-repeating-radial-gradient(#2f2f2f, #1e1e1e 3%);
+    background: -ms-repeating-radial-gradient(#2f2f2f, #1e1e1e 3%);
+    background: -moz-repeating-radial-gradient(#2f2f2f, #1e1e1e 3%);
+    background: repeating-radial-gradient(#2f2f2f, #1e1e1e 3%);
 }
 
 .nt-music-favorable{
@@ -93,4 +104,29 @@
 	display: inline-block;
 	height:5px;
 	margin:20px 0 2px;
+}
+
+.music-center-cover{
+	/*background: #fff;*/
+	background-image: url(../1.jpg);
+	border: 3px solid #eee;
+	border-radius: 50%;
+	width: 220px;
+	height: 220px;
+	position: absolute;
+	left: 120px;
+	top: 70px;
+}
+
+.spin {
+	animation: spin 10s infinite linear;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  0%   { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }
