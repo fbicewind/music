@@ -31,7 +31,7 @@
               <div>
                 <div class="music-left-panel">
                   <div class="nt-music-cover">
-                    <div class="music-center-cover" id="ntCover"></div>
+                    <div class="music-center-cover spin" id="ntCover"></div>
                   </div>
                   <div class="nt-music-favorable">
                     <span class="music-love-button"><i class="fa fa-heart-o" aria-hidden="true"></i>&nbsp;喜欢</span>
@@ -96,9 +96,9 @@
                 </div>
                 <div class="col-sm-6">
                   <span class="music-progress-time">00:00</span>
-                  <div class="progress music-progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar"
-                    aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+                  <div class="progress music-progress" id="musicProgress">
+                    <div class="progress-bar progress-bar-danger" role="progressbar" id="musicNowProgress"
+                    aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
                     <span class="sr-only"></span>
                   </div>
                 </div>
@@ -108,9 +108,9 @@
                 <div class="music-operation-smodule">
                   <i class="fa fa-volume-off fa-lg" aria-hidden="true"></i>
                 </div>
-                <div class="progress volume-progress">
-                  <div class="progress-bar progress-bar-danger" role="progressbar"
-                  aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;">
+                <div class="progress volume-progress" id="volumeProgress">
+                  <div class="progress-bar progress-bar-danger" role="progressbar" id="volumeNowProgress"
+                  aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
                   <span class="sr-only"></span>
                 </div>
               </div>
@@ -136,7 +136,10 @@
     $(function(){
       nightPlayer.init();
       $('#play').click(function(){
-        $('#ntCover').toggleClass('spin');
+        $('#ntCover').css({'animation-play-state':'running'});
+      });
+      $('#ntCover').click(function(){
+        $('#ntCover').css({'animation-play-state':'paused'});
       });
     });
   </script>

@@ -1,6 +1,7 @@
 var nightPlayer = {
 	init : function(){
-
+		nightPlayer.operation.changeProgress();
+		nightPlayer.operation.changeVolume();
 	},
 	operation : {
 		//上一首
@@ -35,9 +36,23 @@ var nightPlayer = {
 		switchMusic : function(index){
 
 		},
+		//指定进度播放
+		changeProgress : function(){
+			$('#musicProgress').click(function(e) {
+			  var offset = $(this).offset();
+			  var relativeX = (e.pageX - offset.left);
+			  var pWidth = $(this).width();
+			  $('#musicNowProgress').css({'width':(relativeX*100/pWidth)+'%'});
+			});
+		},
 		//调整音量
 		changeVolume : function(){
-
+			$('#volumeProgress').click(function(e) {
+			  var offset = $(this).offset();
+			  var relativeX = (e.pageX - offset.left);
+			  var pWidth = $(this).width();
+			  $('#volumeNowProgress').css({'width':(relativeX*100/pWidth)+'%'});
+			});
 		}
 	},
 	option : {

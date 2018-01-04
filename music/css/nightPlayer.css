@@ -116,15 +116,37 @@
 	position: absolute;
 	left: 120px;
 	top: 70px;
+	text-indent: 0; 
 }
 
 .spin {
 	animation: spin 10s infinite linear;
+	animation-play-state: paused;
+	-o-animation: spin 10s infinite linear;
+	-o-animation-play-state: paused;
+	-ms-animation: spin 10s infinite linear;
+	-ms-animation-play-state: paused;
+	-moz-animation: spin 10s infinite linear;
+	-moz-animation-play-state: paused;
+	-webkit-animation: spin 10s infinite linear;
+	-webkit-animation-play-state: paused;
 }
 
 @keyframes spin {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+@-o-keyframes spin {
+  0%   { -o-transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); }
+}
+@-ms-keyframes spin {
+  0%   { -ms-transform: rotate(0deg); }
+  100% { -ms-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+  0%   { -moz-transform: rotate(0deg); }
+  100% { -moz-transform: rotate(360deg); }
 }
 @-webkit-keyframes spin {
   0%   { -webkit-transform: rotate(0deg); }
