@@ -1,3 +1,21 @@
+.progress-bar.progress-bar-danger{
+	transition: width 0s ease;
+	-webkit-transition: width 0s ease;
+}
+
+.nt-operation-icon{
+	margin: 0 35px;
+}
+
+.nt-loading-icon{
+    padding: 0 20px;
+    position: absolute;
+    left: 50%;
+    z-index: 99;
+    margin-left: -34px;
+    background: #f6f6f6;
+}
+
 .nt-music-panel{
 	padding-top:30px;
 	height:550px;

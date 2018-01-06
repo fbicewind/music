@@ -12,8 +12,11 @@ var nightPlayer = {
 
 		ntAudio.addEventListener('canplaythrough', function(){
 			nightPlayer.system.initEndTime();
+			$('#loading').hide();
+			$('#ntCover').addClass('spin');
 		}, false);
 		ntAudio.addEventListener('ended', function(){
+			$('#loading').show().css({'display':'inline-block'});
 			$('#ntNext').click();
 		});
 		nightPlayer.system.loadMusic(0);
@@ -25,7 +28,6 @@ var nightPlayer = {
 				nightPlayer.system.loadMusic(nightPlayer.sysParam.prevIndex);
 				$('#ntCover').removeClass('spin');
 				$('#play').click();
-				$('#ntCover').addClass('spin');
 			});
 		},
 		//下一首
@@ -34,7 +36,6 @@ var nightPlayer = {
 				nightPlayer.system.loadMusic(nightPlayer.sysParam.nextIndex);
 				$('#ntCover').removeClass('spin');
 				$('#play').click();
-				$('#ntCover').addClass('spin');
 			});
 		},
 		//播放
