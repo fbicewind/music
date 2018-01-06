@@ -1,3 +1,15 @@
+ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.nt-panel-title{
+	font-style: oblique;
+	font-weight: bold;
+	font-family: Georgia, serif;
+}
+
 .progress-bar.progress-bar-danger{
 	transition: width 0s ease;
 	-webkit-transition: width 0s ease;
@@ -8,11 +20,11 @@
 }
 
 .nt-loading-icon{
-    padding: 0 20px;
+    padding: 0 6px;
     position: absolute;
     left: 50%;
     z-index: 99;
-    margin-left: -34px;
+    margin-left: -20px;
     background: #f6f6f6;
 }
 
@@ -126,7 +138,9 @@
 
 .music-center-cover{
 	/*background: #fff;*/
-	background-image: url(../1.jpg);
+	background-image: url(../img/0.jpg);
+	background-repeat: no-repeat;
+	background-size: 100%;
 	border: 3px solid #eee;
 	border-radius: 50%;
 	width: 220px;
@@ -135,6 +149,55 @@
 	left: 120px;
 	top: 70px;
 	text-indent: 0; 
+}
+
+.nt-music-list {
+	width: 450px;
+    position: absolute;
+    right: 0;
+    top: -240px;
+    height: 240px;
+    background: #eee;
+    opacity: 0.9;
+    display: none;
+}
+
+.nt-music-list > ul {
+	overflow-y: scroll;
+	height: 199px;
+}
+
+.music-list-title{
+	padding: 10px 15px;
+	margin: 0;
+	font-weight: bold;
+	background: #ccc;
+}
+
+.music-list-li {
+	overflow: hidden;
+	padding: 5px 0 0;
+	cursor: pointer;
+}
+
+.music-list-li.active{
+	color: #d9534f;
+}
+
+.music-list-li:hover{
+	color: #d9534f;
+}
+
+.fa-random.active {
+	color: #d9534f;
+}
+
+.fast-spin {
+	animation: spin 1.5s infinite linear;
+	-o-animation: spin 1.5s infinite linear;
+	-ms-animation: spin 1.5s infinite linear;
+	-moz-animation: spin 1.5s infinite linear;
+	-webkit-animation: spin 1.5s infinite linear;
 }
 
 .spin {
