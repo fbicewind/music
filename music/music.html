@@ -39,7 +39,7 @@
                   </div>
                 </div>
                 <div class="music-right-panel">
-                  <h4>Sweet Track</h4>
+                  <h4 id="musicTitle">Sweet Track</h4>
                   <div class="music-lrc">
                     landscape<br>
                     作词：やなぎなぎ<br>
@@ -90,10 +90,10 @@
               </div>
               <div class="nt-music-operation">
                 <div class="col-sm-3" style="padding-top:10px;text-align: center;">
-                  <i class="fa fa-step-backward fa-2x" aria-hidden="true"></i>
+                  <i class="fa fa-step-backward fa-2x" aria-hidden="true" id="ntPrev"></i>
                   <i class="fa fa-play-circle fa-2x" aria-hidden="true" style="margin: 0 35px;" id="play"></i>
                   <i class="fa fa-pause-circle fa-2x" aria-hidden="true" style="margin: 0 35px;display: none;" id="pause"></i>
-                  <i class="fa fa-step-forward fa-2x" aria-hidden="true"></i>
+                  <i class="fa fa-step-forward fa-2x" aria-hidden="true" id="ntNext"></i>
                 </div>
                 <div class="col-sm-6">
                   <span class="music-progress-time" id="startTime">00:00</span>
@@ -124,7 +124,7 @@
         </div>
       </div>
     </div>
-    <audio src="music/test.mp3" id="ntAudio"></audio>
+    <audio id="ntAudio"></audio>
   </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -134,12 +134,17 @@
   <script src="js/nightPlayer.js"></script>
   <script type="text/javascript">
     $(function(){
-      var ntAudio = $('#ntAudio')[0];
-      nightPlayer.option = {
+       nightPlayer.option = {
         volume : 1,
         autoplay : false,
-        random : true
+        random : true,
+        list : []
       };
+
+      //换成ajax取得list
+      nightPlayer.option.list.push({'url':'http://music.163.com/song/media/outer/url?id=492151019.mp3','singer':'肖冰凝','title':'我是真的爱上你','lrcurl':'','cover':''});
+      nightPlayer.option.list.push({'url':'http://music.163.com/song/media/outer/url?id=29732992.mp3','singer':'Goose House','title':'光るなら','lrcurl':'','cover':''});
+      var ntAudio = $('#ntAudio')[0];
       nightPlayer.init();
     });
   </script>

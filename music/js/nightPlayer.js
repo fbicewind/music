@@ -9,16 +9,33 @@ var nightPlayer = {
 		nightPlayer.operation.switchMode();
 		nightPlayer.operation.changeProgress();
 		nightPlayer.operation.changeVolume();
-		nightPlayer.system.initEndTime();
+
+		ntAudio.addEventListener('canplaythrough', function(){
+			nightPlayer.system.initEndTime();
+		}, false);
+		ntAudio.addEventListener('ended', function(){
+			$('#ntNext').click();
+		});
+		nightPlayer.system.loadMusic(0);
 	},
 	operation : {
 		//上一首
 		prev : function(){
-
+			$('#ntPrev').click(function(){
+				nightPlayer.system.loadMusic(nightPlayer.sysParam.prevIndex);
+				$('#ntCover').removeClass('spin');
+				$('#play').click();
+				$('#ntCover').addClass('spin');
+			});
 		},
 		//下一首
 		next : function(){
-			
+			$('#ntNext').click(function(){
+				nightPlayer.system.loadMusic(nightPlayer.sysParam.nextIndex);
+				$('#ntCover').removeClass('spin');
+				$('#play').click();
+				$('#ntCover').addClass('spin');
+			});
 		},
 		//播放
 		play : function(){
@@ -27,6 +44,7 @@ var nightPlayer = {
 				$('#play').hide();
 				$('#pause').show();
 				ntAudio.play();
+				nightPlayer.sysParam.dynamicProgress = setInterval('nightPlayer.system.dynamicProgress()', 200);
 			});
 		},
 		//暂停
@@ -36,6 +54,7 @@ var nightPlayer = {
 				$('#pause').hide();
 				$('#play').show();
 				ntAudio.pause();
+				window.clearInterval(nightPlayer.sysParam.dynamicProgress)
 			});
 		},
 		//显示隐藏列表
@@ -48,9 +67,12 @@ var nightPlayer = {
 				if($(this).hasClass('fa-volume-off')){
 					$(this).removeClass('fa-volume-off').addClass('fa-volume-up');
 					$('#volumeNowProgress').css({'width':(nightPlayer.option.volume*100)+'%'});
+					ntAudio.muted = false;
+					ntAudio.volume = nightPlayer.option.volume;
 				}else{
 					$(this).removeClass('fa-volume-up').addClass('fa-volume-off');
 					$('#volumeNowProgress').css({'width':'0%'});
+					ntAudio.muted = true;
 				}
 			});
 		},
@@ -85,12 +107,17 @@ var nightPlayer = {
 				var offset = $(this).offset();
 				var relativeX = (e.pageX - offset.left);
 				var pWidth = $(this).width();
+				if(relativeX < 5){
+					relativeX = 0;
+				}
+				ntAudio.volume = relativeX / pWidth;
 				$('#volumeNowProgress').css({'width':(relativeX*100/pWidth)+'%'});
-				if($('#volumeNowProgress').width() == 0){
+				if(relativeX < 5){
 					$('#volume').removeClass('fa-volume-up').addClass('fa-volume-off');
+					ntAudio.muted = true;
 				}else if($('#volume').hasClass('fa-volume-off')){
 					$('#volume').removeClass('fa-volume-off').addClass('fa-volume-up');
-					ntAudio.volume = relativeX/pWidth;
+					ntAudio.muted = false;
 				}
 			});
 		}
@@ -98,16 +125,42 @@ var nightPlayer = {
 	option : {
 		autoplay : false, //是否自动播放
 		volume : 1,	//音量大小
-		random : false //是否随机播放
+		random : false, //是否随机播放
+		list : []
 	},
 	system : {
 		initEndTime : function(){
 			nightPlayer.sysParam.duration = ntAudio.duration;
 			$('#endTime').text(fmtMinute(nightPlayer.sysParam.duration));
+		},
+		loadMusic : function(index){
+			$('#musicTitle').text(nightPlayer.option.list[index].title + ' - ' + nightPlayer.option.list[index].singer);
+			ntAudio.src = nightPlayer.option.list[index].url;
+			ntAudio.load();
+			var count = nightPlayer.option.list.length;
+			if(index == 0){
+				nightPlayer.sysParam.prevIndex = count - 1;
+			} else {
+				nightPlayer.sysParam.prevIndex = index - 1;
+			}
+			if (index == (count - 1)) {
+				nightPlayer.sysParam.nextIndex = 0;
+			} else {
+				nightPlayer.sysParam.nextIndex = parseInt(index) + 1;
+			}
+		},
+		dynamicProgress : function(){
+			var setTime = ntAudio.currentTime;
+			$('#startTime').text(fmtMinute(setTime));
+			$('#musicNowProgress').css({'width': ((setTime*100/nightPlayer.sysParam.duration) +'%')});
 		}
 	},
 	sysParam : {
-		duration : 0
+		duration : 0,	//时长
+		playIndex : 0,	//当前播放
+		prevIndex : 0,	//上一首
+		nextIndex : 0,	//下一首
+		dynamicProgress : null
 	}
 }
 
