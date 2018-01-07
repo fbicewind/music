@@ -76,6 +76,7 @@ var nightPlayer = {
 		toggleList : function(){
 			$('#toggleList').click(function(){
 				$('#ntMusicList').toggle(100);
+				nightPlayer.system.listScroll(nightPlayer.sysParam.playIndex);
 			});
 		},
 		//静音
@@ -179,6 +180,7 @@ var nightPlayer = {
 			$('#endTime').text(fmtMinute(nightPlayer.sysParam.duration));
 		},
 		loadMusic : function(index, flag){
+			nightPlayer.system.listScroll(index);
 			$('#musicTitle').text(nightPlayer.option.list[index].title + ' - ' + nightPlayer.option.list[index].singer);
 			var bgImage = 'url('+nightPlayer.option.list[index].cover+')';
 			$('#ntCover').css('background-image', bgImage);
@@ -225,6 +227,9 @@ var nightPlayer = {
 				next = Math.floor(Math.random()*nightPlayer.option.list.length);
 			}
 			return next;
+		},
+		listScroll : function(index){
+			$('#musicListUl').scrollTop(25*index);
 		}
 	},
 	sysParam : {
