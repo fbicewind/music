@@ -136,9 +136,14 @@ var nightPlayer = {
 		changeVolume : function(){
 			if(nightPlayer.option.volume >= 0 && nightPlayer.option.volume < 1){
 				$('#volumeNowProgress').css({'width':(nightPlayer.option.volume*100)+'%'});
+				if (nightPlayer.option.volume == 0) {
+					$('#volume').removeClass('fa-volume-up').addClass('fa-volume-off');
+					ntAudio.muted = true;
+				}
 			}else{
 				nightPlayer.option.volume = 1;
 			}
+			ntAudio.volume = nightPlayer.option.volume;
 			$('#volumeProgress').click(function(e) {
 				var offset = $(this).offset();
 				var relativeX = (e.pageX - offset.left);
