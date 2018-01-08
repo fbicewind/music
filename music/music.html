@@ -39,52 +39,8 @@
                   </div>
                 </div>
                 <div class="music-right-panel">
-                  <h4 id="musicTitle">Sweet Track</h4>
-                  <div class="music-lrc">
-                    landscape<br>
-                    作词：やなぎなぎ<br>
-                    作曲：斎藤真也<br>
-                    呗：やなぎなぎ<br>
-                    ***Made by池薇曼***<br>
-                    <br>
-                    煌めく思い出の中/闪烁的回忆中<br>
-                    そこには全てがあるような気がして/感觉那里有着全部一切<br>
-                    记忆を探る手をまだ止められないまま/摸索记忆的手还没能停下<br>
-                    约束をお守りにしてた/遵循了约定<br>
-                    <br>
-                    この场所を见つける前のこと/那是在找到这个地方之前发生的事情<br>
-                    <br>
-                    春夏秋冬めぐりめぐって/春夏秋冬轮回流转<br>
-                    移るランドスケープ/就像变迁的风景画<br>
-                    怒ってたり笑ってたり　ずっと忙しいね/又是生气又是欢笑 一直都很忙碌呢<br>
-                    変わっていく今日も　きっと悪いことじゃない/不断变化的今天 也一定不是坏事<br>
-                    みんなが待ってるから　早く帰ろう/大家都在等着呢 早点回去吧<br>
-                    <br>
-                    広げた両手の长さ/以张开的双手的长度<br>
-                    どれくらい日々を抱えられるだろう/能够拥抱住多少的岁月呢<br>
-                    ひとつも落とさないよう歩くなんてこと　难しくて/一天也不遗落地迈步往前 是很困难的事<br>
-                    出来そうにない/不可能做到<br>
-                    <br>
-                    谁かが拾い集めてくれたなら/如果能有谁为我拾起收集起来该有多好<br>
-                    <br>
-                    春夏秋冬めぐりめぐって/春夏秋冬轮回流转<br>
-                    移るランドスケープ/就像变迁的风景画<br>
-                    离れてたり近づいたり　ずっと忙しいね/又是远离又是靠近 一直都很忙碌呢<br>
-                    新しさに委ねてのも　悪いことじゃない/委身于新事物 也并非什么坏事<br>
-                    みんなが待ってるから　早く帰ろう/大家都在等着呢 早点回去吧<br>
-                    <br>
-                    ここからいま　ラインを越え　季节を越え/现在从这里开始 超越境界 超越季节<br>
-                    自分も変わっていける　合図/让自己也不断变化的暗号<br>
-                    <br>
-                    春夏秋冬めぐりめぐって/春夏秋冬轮回流转<br>
-                    移るランドスケープ/就像变迁的风景画<br>
-                    怒ってたり笑ってたり　ずっと忙しいね/又是生气又是欢笑 一直很忙碌呢<br>
-                    変わっていく明日は　きっといいことばかり/不断变迁的明天 一定全是好事<br>
-                    みんなが待ってるから　早く帰ろう/大家都在等着呢 早点回去吧<br>
-                    帰ろう！/回去吧！<br>
-                    <br>
-                    ＊＊＊终わり＊＊＊<br>
-                    <br>
+                  <h4 id="musicTitle"></h4>
+                  <div class="music-lrc-panel" id="musicLrc">
                   </div>
                 </div>
               </div>
@@ -123,14 +79,6 @@
               <div id="ntMusicList" class="nt-music-list">
                 <h5 class="music-list-title">播放列表</h5>
                 <ul id="musicListUl">
-                  <!-- <li class="music-list-li active" onclick="nightPlayer.operation.switchMusic(0)">
-                    <div class="col-sm-7">我是真的爱上你</div>
-                    <div class="col-sm-5">肖冰凝</div>
-                  </li>
-                  <li class="music-list-li" onclick="nightPlayer.operation.switchMusic(1)">
-                    <div class="col-sm-7">光るなら</div>
-                    <div class="col-sm-5">Goose House</div>
-                  </li> -->
                 </ul>
               </div>
             </div>
@@ -148,8 +96,9 @@
   <script src="js/nightPlayer.js"></script>
   <script type="text/javascript">
     $(function(){
+
       nightPlayer.option = {
-        volume : 1,
+        volume : 0,
         autoplay : true,
         random : true,
         list : []
@@ -176,7 +125,7 @@
         'cover':'img/3.jpg'});
       nightPlayer.option.list.push({
         'url':'http://music.163.com/song/media/outer/url?id=5240550.mp3',
-        'singer':'群星',
+        'singer':'冯飞等',
         'title':'北京东路的日子',
         'lrcurl':'',
         'cover':'img/4.jpg'});

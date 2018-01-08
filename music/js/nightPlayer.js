@@ -189,6 +189,7 @@ var nightPlayer = {
 			$('#musicTitle').text(nightPlayer.option.list[index].title + ' - ' + nightPlayer.option.list[index].singer);
 			var bgImage = 'url('+nightPlayer.option.list[index].cover+')';
 			$('#ntCover').css('background-image', bgImage);
+			nightPlayer.system.getLyric(index);
 			ntAudio.src = nightPlayer.option.list[index].url;
 			ntAudio.load();
 			nightPlayer.sysParam.playIndex = index;
@@ -235,6 +236,62 @@ var nightPlayer = {
 		},
 		listScroll : function(index){
 			$('#musicListUl').scrollTop(25*index);
+		},
+		parseLyric : function(lrc){
+			if (lrc == null || lrc == '') {
+				$('#musicLrc').html('找不到歌词...');
+				return;
+			}
+			nightPlayer.sysParam.jsonLyric = [];
+		    str = lrc.replace(/\]\[/g,'] [');//"]["没有空格会影响匹配结果
+		    var arr = str.match(/(\[\d{2}:\d{2}\.\d{2}\])(.[^\[\]]*)?/g);
+		    var time = [], txt = [];
+		    for(var i=0; i<arr.length; i++){
+				/^(\[\d{2}:\d{2}\.\d{2}\])(.[^\[\]]*)?$/.exec(arr[i]);
+				time.push(RegExp.$1);
+				txt.push(RegExp.$2);
+		    }
+		    for(var i=0, j=time.length; i<j; i++) {  
+				var obj = {};  
+				obj.lyric = txt[i];  
+				obj.time = nightPlayer.system.fmtLyricTime(time[i]);  
+				nightPlayer.sysParam.jsonLyric.push(obj);  
+		    }
+	    	var lrcStr = '';
+	    	lrcStr += '<div class="music-lrc active" data-num="0">' + nightPlayer.sysParam.jsonLyric[0].lyric + '</div>';
+	    	for(var i=1; i<nightPlayer.sysParam.jsonLyric.length;i++){
+	    		lrcStr += '<div class="music-lrc" data-num="'
+	    			+ i + '">' + nightPlayer.sysParam.jsonLyric[i].lyric + '</div>';
+	    	}
+	    	$('#musicLrc').html(lrcStr);
+		},
+		getLyric : function(index){
+			var lrc = '';
+			if (index == 3) {
+				lrc = str4;
+			}
+			// var lrcurl = nightPlayer.option.list[index].lrcurl;
+			// if (url != null && url != '') {
+			// 	$.ajax(function(){
+			// 		url : lrcurl,
+			// 		async : false,
+			// 		success : function(data){
+			// 			lrc = data;
+			// 		}
+			// 	});
+			// }
+			nightPlayer.system.parseLyric(lrc);
+		},
+		fmtLyricTime : function(time){
+			var str = time;   
+		    // 删除 '['  
+		    str = str.substr(1);  
+		    // 删除 ']'  
+		    str = str.substr(0, str.length-1);    
+		    var minutes = parseInt(str.slice(0, str.indexOf(':')));  
+		    var seconds = parseFloat(str.substr(str.indexOf(':')+1));  
+		    var newTime = (minutes*60 + seconds).toFixed(2);  
+		    return newTime;
 		}
 	},
 	sysParam : {
@@ -242,7 +299,8 @@ var nightPlayer = {
 		playIndex : 0,	//当前播放
 		prevIndex : 0,	//上一首
 		nextIndex : 0,	//下一首
-		randomPrev : [],
+		randomPrev : [],//随机播放的上一首
+		jsonLyric : [],	//歌词json
 		dynamicProgress : null
 	}
 }
@@ -258,3 +316,94 @@ function addZero(str){
 	}
 	return str;
 }
+
+var str4 = '[ti:北京东路的日子]'
+		+ ''
+		+ '[ar:冯飞(等)]'
+		+ ''
+		+ '[by:冯飞]'
+		+ ''
+		+ 
+		'[00:00.00]开始的开始 我们都是孩子'
+		+ ''
+		+ '[00:05.65]最后的最后 渴望变成天使'
+		+ ''
+		+ '[00:10.75]歌谣的歌谣 藏着童话的影子'
+		+ ''
+		+ '[00:15.45]孩子的孩子 该要飞往哪去'
+		+ ''
+		+ '[00:21.80]阳城狂人  冯飞  制作'
+		+ ''
+		+ '[00:23.20]开始的开始 我们都是孩子'
+		+ ''
+		+ '[00:28.10]最后的最后 渴望变成天使'
+		+ ''
+		+ '[00:33.15]歌谣的歌谣 藏着童话的影子'
+		+ ''
+		+ '[00:38.10]孩子的孩子 该要飞往哪去'
+		+ ''
+		+ '[00:44.33] 阳城狂人  冯飞  制作'
+		+ ''
+		+ '[01:09.70]当某天 你若听见 有人在说 那些奇怪的语言'
+		+ ''
+		+ '[01:20.00]当某天 你若看见 满街的本子还是学乐先'
+		+ ''
+		+ '[01:30.50]当某天 再唱着 这首歌会是在哪一个角落'
+		+ ''
+		+ '[01:41.10]当某天 再踏进 这校园会是哪片落叶 掉进回忆的流年'
+		+ ''
+		+ '[01:54.50]表示从一楼到四楼的距离 原来只有三年'
+		+ ''
+		+ '[02:00.00]表示门卫叔叔食堂阿姨 很有夫妻脸'
+		+ ''
+		+ '[02:05.50]各种季风洋流都搞不懂 还有新视野'
+		+ ''
+		+ '[02:10.50]各种曾经狂热的海报照片 卖几块几毛钱'
+		+ ''
+		+ '[02:16.00]我们穿上西装假装成长'
+		+ ''
+		+ '[02:20.00]胶片挥霍习惯的笑脸'
+		+ ''
+		+ '[02:22.40]悲伤一发 寂寞唏嘘'
+		+ ''
+		+ '[02:25.00]痛的初体验'
+		+ ''
+		+ '[02:26.00]毕业和成年的字眼'
+		+ ''
+		+ '[02:30.00]格外扣人心弦'
+		+ ''
+		+ '[02:32.00]各种莫名的感伤'
+		+ ''
+		+ '[02:35.00]只说句 嘻嘻一些'
+		+ ''
+		+ '[02:40.00] 阳城狂人  冯飞  制作'
+		+ ''
+		+ '[03:04.00]十年后 你若听见 有人在说 这些奇怪的语言'
+		+ ''
+		+ '[03:14.00]十年后 你若看见 满街的本子还是学乐先'
+		+ ''
+		+ '[03:26.00]表示从一楼到四楼的距离 原来只有三年'
+		+ ''
+		+ '[03:33.00]表示门卫叔叔食堂阿姨 很有夫妻脸'
+		+ ''
+		+ '[03:39.00]各种季风洋流都搞不懂 还有新视野'
+		+ ''
+		+ '[03:44.00]各种曾经狂热的海报照片 卖几块几毛钱'
+		+ ''
+		+ '[03:49.00]我们即将分别 独自浪在 中国外国不同地点'
+		+ ''
+		+ '[03:54.80]瞥见白色的校服 还会以为是我认识的谁'
+		+ ''
+		+ '[04:00.00]顾萍凡哥乌龟大师 方丈我爱你'
+		+ ''
+		+ '[04:05.00]也或许谁都忘记谁的名字 但记得'
+		+ ''
+		+ '[04:10.00]北京东路的日子'
+		+ ''
+		+ '[04:14.00]开始的开始 我们都是孩子'
+		+ ''
+		+ '[04:19.00]最后的最后 渴望变成天使'
+		+ ''
+		+ '[04:23.00]歌谣的歌谣 藏着童话的影子'
+		+ ''
+		+ '[04:29.00]孩子的孩子 该要飞往哪去 ';

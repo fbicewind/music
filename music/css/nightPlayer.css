@@ -48,11 +48,19 @@ ul{
 	text-align: left;
 }
 
-.music-lrc {
+.music-lrc-panel {
 	word-break: break-all;
 	overflow-y: scroll;
 	height: 400px;
 	padding-right: 3px;
+}
+
+.music-lrc{
+	height: 25px;
+}
+
+.music-lrc.active{
+	color: #d9534f;
 }
 
 .nt-music-cover{
