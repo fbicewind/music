@@ -11,6 +11,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="font-awaresome/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="css/nightPlayer.css">
+  <link rel="stylesheet" type="text/css" href="css/fit.css">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +41,7 @@
                 </div>
                 <div class="music-right-panel">
                   <h4 id="musicTitle"></h4>
-                  <div class="music-lrc-panel" id="musicLrc">
+                  <div class="music-lrc-panel hidden-xs" id="musicLrc">
                   </div>
                 </div>
               </div>
@@ -52,7 +53,7 @@
                   <i class="fa fa-pause-circle fa-2x nt-operation-icon" aria-hidden="true" style="display: none;" id="pause"></i>
                   <i class="fa fa-step-forward fa-2x" aria-hidden="true" id="ntNext"></i>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 nt-music-center">
                   <span class="music-progress-time" id="startTime">00:00</span>
                   <div class="progress music-progress" id="musicProgress">
                     <div class="progress-bar progress-bar-danger" role="progressbar" id="musicNowProgress" style="width: 0%;">
@@ -61,7 +62,7 @@
                 </div>
                 <span class="music-all-time" id="endTime">00:00</span>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-3 nt-music-center">
                 <div class="music-operation-smodule">
                   <i class="fa fa-volume-up fa-lg" aria-hidden="true" id="volume"></i>
                 </div>
@@ -98,7 +99,7 @@
     $(function(){
 
       nightPlayer.option = {
-        volume : 0,
+        volume : 1,
         autoplay : true,
         random : false
       };

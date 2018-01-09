@@ -168,6 +168,7 @@ ul{
     background: #eee;
     opacity: 0.9;
     display: none;
+    text-align: left;
 }
 
 .nt-music-list > ul {
@@ -198,6 +199,10 @@ ul{
 
 .fa-random.active {
 	color: #d9534f;
+}
+
+.nt-music-center{
+	text-align: center;
 }
 
 .fast-spin {

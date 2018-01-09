@@ -1,24 +1,119 @@
 /*自适应*/
-@media screen and (min-width: 992px) and (max-width: 1199px) {
-    
+@media screen and (max-width: 1199.5px) {
+	.music-left-panel{
+		width:400px;
+	}
+	.music-right-panel{
+		width: 460px;
+		margin-right: 0;
+		padding-left: 15px;
+	}
+	.nt-music-cover{
+		margin: 0 20px;
+	}
+	.music-center-cover{
+		left: 90px;
+	}
+	.music-progress{
+		width: 70%;
+	}
 }
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
-    
+@media screen and (max-width: 991.5px) {
+	.music-left-panel{
+		width:300px;
+	}
+	.music-right-panel{
+		width: 350px;
+		margin-right: 0;
+		padding-left: 15px;
+	}
+	.nt-music-cover{
+		width: 280px;
+		height: 280px;
+		margin: 0 auto;
+	}
+	.music-center-cover{
+		width: 180px;
+		height: 180px;
+		top: 50px;
+		left: 60px;
+	}
+	.nt-music-panel{
+		height: 450px;
+	}
 }
 
-@media screen and (min-width: 480px) and (max-width: 767px) {
-    
+@media screen and (max-width: 767.5px) {
+	.music-left-panel{
+		float: none;
+		margin: 0 auto;
+	}
+	.music-right-panel{
+		float: none;
+		text-align: center;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+	.nt-music-panel{
+		height: 525px;
+	}
+	.nt-music-operation{
+		height: 120px;
+	}
+	.nt-music-list{
+		width: 100%
+	}
 }
 
-@media screen and (min-width: 375px) and (max-width: 479px) {
-    
+@media screen and (max-width: 480px) {
+	.music-progress{
+		width: 60%;
+	}
 }
 
-@media screen and (min-width: 320px) and (max-width: 374px) {
-    
+@media screen and (max-width: 374.5px) {
+	.music-left-panel{
+		width: 260px;
+	}
+	.nt-music-cover{
+		width: 240px;
+		height: 240px;
+		margin: 0 auto;
+	}
+	.music-center-cover{
+		width: 160px;
+		height: 160px;
+		top: 40px;
+		left: 50px;
+	}
+	.music-progress{
+		width: 55%;
+	}
+	.music-progress-time,.music-all-time{
+		width: 20%;
+	}
+	.music-right-panel{
+		margin-top: 25px;
+	}
 }
 
-@media only screen and (max-width: 319px) {
-    
+@media screen and (max-width: 320px) {
+	.music-left-panel{
+		width: 220px;
+	}
+	.nt-music-cover{
+		width: 220px;
+		height: 220px;
+	}
+	.music-center-cover {
+	    width: 150px;
+	    height: 150px;
+	    top: 35px;
+	    left: 35px;
+	}
+	.nt-music-panel{
+		height: 490px;
+	}
 }
