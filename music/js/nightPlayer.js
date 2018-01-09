@@ -24,6 +24,9 @@ var nightPlayer = {
 			$('#loading').show().css({'display':'inline-block'});
 			$('#ntNext').click();
 		});
+		ntAudio.addEventListener('error', function(){
+			alert('歌曲资源加载失败！');
+		});
 		nightPlayer.system.loadMusic(playIndex, nightPlayer.option.random);
 		if (nightPlayer.option.autoplay) {
 			$('#play').click();
@@ -291,13 +294,19 @@ var nightPlayer = {
 			}
 			// var lrcurl = nightPlayer.sysParam.list[index].lrcurl;
 			// if (url != null && url != '') {
-			// 	$.ajax(function(){
-			// 		url : lrcurl,
-			// 		async : false,
-			// 		success : function(data){
-			// 			lrc = data;
-			// 		}
-			// 	});
+			// 	 $.ajax({
+			//         url : lrcurl,
+			//         headers : {
+			//             contentType:"application/x-www-form-urlencoded"
+			//         },
+			//         async : false,
+			//         success:function(data){
+			//             lrc = data;
+			//         },
+			//         error:function(e){
+			//             alert('歌词加载失败！');
+			//         }
+			//     });
 			// }
 			nightPlayer.system.parseLyric(lrc);
 		},
