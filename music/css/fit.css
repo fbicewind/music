@@ -42,6 +42,9 @@
 	.nt-music-panel{
 		height: 450px;
 	}
+	.music-lrc-panel{
+		height: 320px;
+	}
 }
 
 @media screen and (max-width: 767.5px) {

@@ -19,6 +19,11 @@ var nightPlayer = {
 			nightPlayer.system.initEndTime();
 			$('#loading').hide();
 			$('#ntCover').addClass('spin');
+			if (nightPlayer.sysParam.firstTime && nightPlayer.option.autoplay) {
+				$('#play').click();
+				nightPlayer.system.listPlaying(playIndex);
+				nightPlayer.sysParam.firstTime = false;
+			}
 		}, false);
 		ntAudio.addEventListener('ended', function(){
 			$('#loading').show().css({'display':'inline-block'});
@@ -28,10 +33,6 @@ var nightPlayer = {
 			alert('歌曲资源加载失败！');
 		});
 		nightPlayer.system.loadMusic(playIndex, nightPlayer.option.random);
-		if (nightPlayer.option.autoplay) {
-			$('#play').click();
-			nightPlayer.system.listPlaying(playIndex);
-		}
 	},
 	operation : {
 		//上一首
@@ -211,8 +212,8 @@ var nightPlayer = {
 			$('#ntCover').css('background-image', bgImage);
 			nightPlayer.system.getLyric(index);
 			ntAudio.src = nightPlayer.sysParam.list[index].url;
-			ntAudio.load();
 			nightPlayer.sysParam.playIndex = index;
+			ntAudio.load();
 			if(nightPlayer.option.random){
 				nightPlayer.sysParam.nextIndex = nightPlayer.system.getNextRandom();
 				if(flag){ //随机播放才记录随机播放的上一首
@@ -338,6 +339,7 @@ var nightPlayer = {
 		}
 	},
 	sysParam : {
+		firstTime : true, //随机播放第一首标志
 		duration : 0,	//时长
 		playIndex : 0,	//当前播放
 		prevIndex : 0,	//上一首
