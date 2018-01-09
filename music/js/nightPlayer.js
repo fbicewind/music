@@ -13,7 +13,7 @@ var nightPlayer = {
 		var playIndex = 0;
 		if(nightPlayer.option.random){
 			$('#randomMode').addClass('active').attr('title','当前随机播放');
-			playIndex = Math.floor(Math.random()*nightPlayer.option.list.length);
+			playIndex = Math.floor(Math.random()*nightPlayer.sysParam.list.length);
 		}
 		ntAudio.addEventListener('canplaythrough', function(){
 			nightPlayer.system.initEndTime();
@@ -101,7 +101,7 @@ var nightPlayer = {
 					$(this).removeClass('active').attr('title', '当前列表循环');
 					nightPlayer.option.random = false;
 					nightPlayer.sysParam.randomPrev = [];
-					var count = nightPlayer.option.list.length;
+					var count = nightPlayer.sysParam.list.length;
 					if(nightPlayer.sysParam.playIndex == 0){
 						nightPlayer.sysParam.prevIndex = count - 1;
 					} else {
@@ -128,6 +128,23 @@ var nightPlayer = {
 				var pWidth = $(this).width();
 				$('#musicNowProgress').css({'width':(relativeX*100/pWidth)+'%'});
 				var setTime = (relativeX/pWidth) * nightPlayer.sysParam.duration;
+				
+				//如果有歌词，指定歌词位置
+				if(nightPlayer.sysParam.jsonLyric.length > 0){
+					for (var i = nightPlayer.sysParam.jsonLyric.length - 1; i >= 0; i--) {
+						if (nightPlayer.sysParam.jsonLyric[i].time <= setTime) {
+							if (i > 5) {
+								$('#musicLrc').scrollTop(25*(i-5));
+							}else{
+								$('#musicLrc').scrollTop(0);
+							}
+							$('.music-lrc').removeClass('active');
+							$('.music-lrc').eq(i).addClass('active');
+							break;
+						}
+					}
+				}
+
 				$('#startTime').text(fmtMinute(setTime));
 				ntAudio.currentTime = setTime;
 			});
@@ -166,13 +183,12 @@ var nightPlayer = {
 	option : {
 		autoplay : false, //是否自动播放
 		volume : 1,	//音量大小
-		random : false, //是否随机播放
-		list : []
+		random : false //是否随机播放
 	},
 	system : {
 		initMusicList : function(){
 			var str = '';
-			$(nightPlayer.option.list).each(function(index, item){
+			$(nightPlayer.sysParam.list).each(function(index, item){
 				str += '<li class="music-list-li" onclick="nightPlayer.operation.switchMusic('
 					+ index + ')"><div class="col-sm-7">'
 					+ item.title + '</div><div class="col-sm-5">'
@@ -185,12 +201,13 @@ var nightPlayer = {
 			$('#endTime').text(fmtMinute(nightPlayer.sysParam.duration));
 		},
 		loadMusic : function(index, flag){
+			$('#musicLrc').scrollTop(0);
 			nightPlayer.system.listScroll(index);
-			$('#musicTitle').text(nightPlayer.option.list[index].title + ' - ' + nightPlayer.option.list[index].singer);
-			var bgImage = 'url('+nightPlayer.option.list[index].cover+')';
+			$('#musicTitle').text(nightPlayer.sysParam.list[index].title + ' - ' + nightPlayer.sysParam.list[index].singer);
+			var bgImage = 'url('+nightPlayer.sysParam.list[index].cover+')';
 			$('#ntCover').css('background-image', bgImage);
 			nightPlayer.system.getLyric(index);
-			ntAudio.src = nightPlayer.option.list[index].url;
+			ntAudio.src = nightPlayer.sysParam.list[index].url;
 			ntAudio.load();
 			nightPlayer.sysParam.playIndex = index;
 			if(nightPlayer.option.random){
@@ -205,7 +222,7 @@ var nightPlayer = {
 					nightPlayer.sysParam.prevIndex = nightPlayer.system.getNextRandom();
 				}
 			}else{
-				var count = nightPlayer.option.list.length;
+				var count = nightPlayer.sysParam.list.length;
 				if(index == 0){
 					nightPlayer.sysParam.prevIndex = count - 1;
 				} else {
@@ -222,15 +239,17 @@ var nightPlayer = {
 			var setTime = ntAudio.currentTime;
 			$('#startTime').text(fmtMinute(setTime));
 			$('#musicNowProgress').css({'width': ((setTime*100/nightPlayer.sysParam.duration) +'%')});
+			//如果有歌词，歌词滚动
+			nightPlayer.system.scrollLrc(setTime);
 		},
 		listPlaying : function(index){
 			$('.music-list-li').removeClass('active');
 			$('.music-list-li').eq(index).addClass('active');
 		},
 		getNextRandom : function(){
-			var next = Math.floor(Math.random()*nightPlayer.option.list.length);
+			var next = Math.floor(Math.random()*nightPlayer.sysParam.list.length);
 			while(next == nightPlayer.sysParam.playIndex){
-				next = Math.floor(Math.random()*nightPlayer.option.list.length);
+				next = Math.floor(Math.random()*nightPlayer.sysParam.list.length);
 			}
 			return next;
 		},
@@ -270,7 +289,7 @@ var nightPlayer = {
 			if (index == 3) {
 				lrc = str4;
 			}
-			// var lrcurl = nightPlayer.option.list[index].lrcurl;
+			// var lrcurl = nightPlayer.sysParam.list[index].lrcurl;
 			// if (url != null && url != '') {
 			// 	$.ajax(function(){
 			// 		url : lrcurl,
@@ -292,6 +311,21 @@ var nightPlayer = {
 		    var seconds = parseFloat(str.substr(str.indexOf(':')+1));  
 		    var newTime = (minutes*60 + seconds).toFixed(2);  
 		    return newTime;
+		},
+		scrollLrc : function(currentTime){
+			if(nightPlayer.sysParam.jsonLyric.length > 0){
+				var index = $('.music-lrc.active').attr('data-num');
+				if (index < nightPlayer.sysParam.jsonLyric.length - 2) {
+					var nextTime = nightPlayer.sysParam.jsonLyric[parseInt(index) + 1].time;
+					if (nextTime <= currentTime) {
+						$('.music-lrc').removeClass('active');
+						$('.music-lrc').eq(parseInt(index) + 1).addClass('active');
+						if (index > 5) {
+							$('#musicLrc').scrollTop(25*(index-5));
+						}
+					}
+				}
+			}
 		}
 	},
 	sysParam : {
@@ -301,7 +335,8 @@ var nightPlayer = {
 		nextIndex : 0,	//下一首
 		randomPrev : [],//随机播放的上一首
 		jsonLyric : [],	//歌词json
-		dynamicProgress : null
+		dynamicProgress : null,	//定时器对象
+		list : []	//歌曲列表
 	}
 }
 
